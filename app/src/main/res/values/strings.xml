@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">memento</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_upload_photo">upload_photo</string>
+</resources>
