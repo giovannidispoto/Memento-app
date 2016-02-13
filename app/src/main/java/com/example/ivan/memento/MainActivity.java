@@ -7,12 +7,13 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTabHost;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -28,23 +29,35 @@ import java.io.UnsupportedEncodingException;
 
 import cz.msebera.android.httpclient.Header;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FragmentActivity implements OnClickListener {
 
     private ViewPager mViewPager;
     private static final int CAMERA_REQUEST = 123;
     private static File foto = null;
     private static String risposta;
     private static JSONObject main;
+    private FragmentTabHost mTabHost;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+        mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
+        mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
+
+        mTabHost.addTab(mTabHost.newTabSpec("tab1").setIndicator("Tab1"),
+                Tab1Fragment.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("tab2").setIndicator("Tab2"),
+                Tab2Fragment.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("tab3").setIndicator("Tab3"),
+                Tab3Fragment.class, null);
+
         //json bestia ca eva puttana troia mario testa di cazzo
         final AsyncHttpClient client = new AsyncHttpClient();
-        RequestHandle requestHandle = client.get("http://search.twitter.com/search.json?q=devapp ", new AsyncHttpResponseHandler() {
+        RequestHandle requestHandle = client.get("link json", new AsyncHttpResponseHandler() {
 
             @Override
             public void onStart() {
@@ -62,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                         for (int i=0; i < mainArray.length(); i++){
                             JSONObject jsonObject = mainArray.getJSONObject(i);
                             Toast.makeText(getApplicationContext(), jsonObject.getString("text"), Toast.LENGTH_SHORT).show();
+
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -141,5 +155,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }
