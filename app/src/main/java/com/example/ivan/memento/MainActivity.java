@@ -30,7 +30,7 @@ import java.io.UnsupportedEncodingException;
 import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends FragmentActivity implements OnClickListener {
-
+//cane pane sale
     private ViewPager mViewPager;
     private static final int CAMERA_REQUEST = 123;
     private static File foto = null;
@@ -55,9 +55,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
         mTabHost.addTab(mTabHost.newTabSpec("tab3").setIndicator("Tab3"),
                 Tab3Fragment.class, null);
 
-        //json bestia ca eva puttana troia mario testa di cazzo
         final AsyncHttpClient client = new AsyncHttpClient();
-        RequestHandle requestHandle = client.get("link json", new AsyncHttpResponseHandler() {
+        RequestHandle requestHandle = client.get("www.google.it", new AsyncHttpResponseHandler() {
 
             @Override
             public void onStart() {
@@ -119,7 +118,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAMERA_REQUEST && resultCode == 1) {
+        if (requestCode == CAMERA_REQUEST && resultCode==RESULT_OK) {
             //Provo a recuperare i dati, in caso si verifichi qualche errore visualizzo un Toast con la descrizione.
             try {
                 Uri photoUri = Uri.fromFile(foto);
