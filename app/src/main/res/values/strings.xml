@@ -7,12 +7,13 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Login o Registrati</string>
+    <string name="action_sign_in">Login</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">Email non valida</string>
     <string name="error_invalid_password">Password troppo corta</string>
     <string name="error_incorrect_password">Password errata</string>
     <string name="error_field_required">Campo obbligatorio</string>
+    <string name="register">Non sei registrato?</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>

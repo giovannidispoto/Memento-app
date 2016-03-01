@@ -30,7 +30,7 @@ import java.io.UnsupportedEncodingException;
 import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends FragmentActivity implements OnClickListener {
-//cane pane sale
+
     private ViewPager mViewPager;
     private static final int CAMERA_REQUEST = 123;
     private static File foto = null;

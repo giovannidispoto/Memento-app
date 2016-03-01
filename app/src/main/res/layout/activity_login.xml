@@ -22,7 +22,8 @@
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="false">
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -72,7 +73,22 @@
                 android:text="@string/action_sign_in"
                 android:textStyle="bold" />
 
+            <TextView
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="49dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/register"
+                android:id="@+id/textView" />
+
         </LinearLayout>
     </ScrollView>
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New RadioButton"
+        android:id="@+id/radioButton"
+        android:layout_gravity="right" />
 
 </LinearLayout>

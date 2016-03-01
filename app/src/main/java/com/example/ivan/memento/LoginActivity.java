@@ -28,9 +28,34 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.HttpResponse;
+import cz.msebera.android.httpclient.client.ClientProtocolException;
+import cz.msebera.android.httpclient.client.HttpClient;
+import cz.msebera.android.httpclient.client.methods.HttpPost;
+import cz.msebera.android.httpclient.entity.StringEntity;
+import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -61,6 +86,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private String risposta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,6 +199,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else if (!isEmailValid(email)) {
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
+            //JSONArray credentials = new JSONArray();
+
             cancel = true;
         }
 
@@ -186,12 +214,55 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
+            JSONObject obj = new JSONObject(); //creazione del JSON
+
+            try {
+                obj.put("email", email);
+                obj.put("password", password);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //Richiesta
+            final AsyncHttpClient client = new AsyncHttpClient();
+            RequestParams ps = new RequestParams();
+            try {
+                ps.put("key", obj.toString());
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+            //Invio JSON
+            client.post("http://www.google.com/", ps, new AsyncHttpResponseHandler() {
+                public void onStart() {
+                    super.onStart();
+                }
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                    Toast.makeText(getApplicationContext(), "Trasferimento avvenuto con successo", Toast.LENGTH_LONG).show();
+                    try {
+                        risposta = new String(responseBody, "UTF-8");
+                        JSONObject main=new JSONObject(risposta);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                    Toast.makeText(getApplicationContext(), "Errore nel trasferimento", Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.length()>0;
+        //TODO: Replace this with your own login
+        return (email.length()>0 && true /*email.matches("^[_A-Za-z0-9-]+(\\\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+\n" +
+                "(\\\\.[A-Za-z0-9-]+)*(\\\\.[A-Za-z]{2,})")*/)? true : false;
+
     }
 
     private boolean isPasswordValid(String password) {
