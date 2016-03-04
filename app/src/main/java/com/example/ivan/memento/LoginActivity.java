@@ -3,6 +3,7 @@ package com.example.ivan.memento;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -217,7 +218,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             JSONObject obj = new JSONObject(); //creazione del JSON
 
             try {
-                obj.put("email", email);
+                obj.put("username", "pippo");
                 obj.put("password", password);
 
             } catch (Exception e) {
@@ -228,11 +229,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             RequestParams ps = new RequestParams();
             try {
                 ps.put("key", obj.toString());
+                ps.put("username",email);
+                ps.put("password",password);
             }catch (Exception e) {
                 e.printStackTrace();
             }
             //Invio JSON
-            client.post("http://www.google.com/", ps, new AsyncHttpResponseHandler() {
+            client.post("http://10.0.0.4/memento/?action=auth", ps, new AsyncHttpResponseHandler() {
                 public void onStart() {
                     super.onStart();
                 }
@@ -242,10 +245,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     Toast.makeText(getApplicationContext(), "Trasferimento avvenuto con successo", Toast.LENGTH_LONG).show();
                     try {
                         risposta = new String(responseBody, "UTF-8");
-                        JSONObject main=new JSONObject(risposta);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (UnsupportedEncodingException e) {
+                        //JSONObject main=new JSONObject(risposta);
+                        Toast.makeText(getApplicationContext(),risposta,Toast.LENGTH_LONG).show();
+                     /*catch (JSONException e) {
+                        e.printStackTrace();*/
+                            Intent i = new Intent(getApplicationContext() ,MainActivity.class);
+        startActivity(i);
+                    }catch(UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
                 }
@@ -256,12 +262,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
             });
         }
+
+
     }
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own login
-        return (email.length()>0 && true /*email.matches("^[_A-Za-z0-9-]+(\\\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+\n" +
-                "(\\\\.[A-Za-z0-9-]+)*(\\\\.[A-Za-z]{2,})")*/)? true : false;
+        return (email.length() > 0 && true /*email.matches("^[_A-Za-z0-9-]+(\\\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+\n" +
+                "(\\\\.[A-Za-z0-9-]+)*(\\\\.[A-Za-z]{2,})")*/);
 
     }
 
