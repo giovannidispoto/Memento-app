@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="1"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp"
+    android:background="#f5f5f5">
+
+    <RelativeLayout
+        android:layout_width="387dp"
+        android:layout_height="52dp"
+        android:id="@+id/relativeLayout">
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/img" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:textSize="25sp"
+            android:text="TextView"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/imageView1" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="550dp"
+        android:id="@+id/relativeLayoutpulsanti"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_alignParentEnd="true">
+
+        <ImageView
+            android:layout_width="500dp"
+            android:layout_height="500dp"
+            android:id="@+id/imageView2"
+            android:src="@drawable/img"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_above="@+id/like" />
+
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mi piace"
+            android:textOn="Non mi piace più"
+            android:textOff="Mi piace"
+            android:id="@+id/like"
+            android:layout_alignTop="@+id/commenti"
+            android:layout_alignParentStart="true" />
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Commenti"
+            android:id="@+id/commenti"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

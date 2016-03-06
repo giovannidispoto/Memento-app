@@ -16,18 +16,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestHandle;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-
-import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends FragmentActivity implements OnClickListener {
 
@@ -48,13 +39,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
-        mTabHost.addTab(mTabHost.newTabSpec("tab1").setIndicator("Tab1"),
+        mTabHost.addTab(mTabHost.newTabSpec("tab1").setIndicator("Home"),
                 Tab1Fragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("tab2").setIndicator("Tab2"),
+        mTabHost.addTab(mTabHost.newTabSpec("tab2").setIndicator("Interessi"),
                 Tab2Fragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("tab3").setIndicator("Tab3"),
+        mTabHost.addTab(mTabHost.newTabSpec("tab3").setIndicator("Profilo"),
                 Tab3Fragment.class, null);
-
+        /*
         final AsyncHttpClient client = new AsyncHttpClient();
         RequestHandle requestHandle = client.get("www.google.it", new AsyncHttpResponseHandler() {
 
@@ -96,6 +87,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
             }
         });
+        */
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

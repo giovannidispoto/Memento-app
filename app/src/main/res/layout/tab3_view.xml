@@ -2,16 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#26ce61">
+    android:background="#f4f4f4">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/fotoprofilo"
+        android:src="@drawable/fotoprofilodef" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:paddingLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Tab tre Fragment"
-        android:textColor="#000000"
-        android:textSize="20px" />
-
+        android:text="nome utente"
+        android:id="@+id/textView6"
+        android:layout_alignBottom="@+id/fotoprofilo"
+        android:layout_toEndOf="@+id/fotoprofilo"
+        android:textSize="25dp" />
 </RelativeLayout>
