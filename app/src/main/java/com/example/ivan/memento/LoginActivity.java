@@ -33,33 +33,16 @@ import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.HttpResponse;
-import cz.msebera.android.httpclient.client.ClientProtocolException;
-import cz.msebera.android.httpclient.client.HttpClient;
-import cz.msebera.android.httpclient.client.methods.HttpPost;
-import cz.msebera.android.httpclient.entity.StringEntity;
-import cz.msebera.android.httpclient.impl.client.BasicCookieStore;
-import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
-import cz.msebera.android.httpclient.impl.cookie.BasicClientCookie;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -99,7 +82,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         Intent i = new Intent(getBaseContext(),MainActivity.class);
         startActivity(i);
         // Set up the login form.
-        mUsernameView = (AutoCompleteTextView) findViewById(R.id.username);//assegnazione risorsa email
+        mUsernameView = (AutoCompleteTextView) findViewById(R.id.textView7);//assegnazione risorsa email
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
