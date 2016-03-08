@@ -24,15 +24,15 @@ import java.net.URL;
 public class CustomAdapter extends BaseAdapter{
     String [] result;
     Context context;
-    String[] imageId;
-    String[] fotoId;
+    int [] imageId;
+    int [] fotoId;
     private static LayoutInflater inflater=null;
 
-    public CustomAdapter(Activity mainActivity, String[] prgmNameList, String[] prgmImages, String[] prgmFoto) {
+    public CustomAdapter(Activity mainActivity, String[] prgmNameList, int [] prgmImages, int [] prgmFoto) {
         // TODO Auto-generated constructor stub
         result=prgmNameList;
         context=mainActivity;
-        imageId=prgmImages;
+        imageId= prgmImages;
         fotoId = prgmFoto;
         inflater = ( LayoutInflater )context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -73,8 +73,11 @@ public class CustomAdapter extends BaseAdapter{
         holder.img2=(ImageView) rowView.findViewById(R.id.imageView2);
 
         holder.tv.setText(result[position]);
-        holder.img.setImageBitmap(getBitmapFromURL(imageId[position]));
-        holder.img2.setImageBitmap(getBitmapFromURL(fotoId[position]));
+        //holder.img.setImageBitmap(getBitmapFromURL(imageId[position]));
+        //holder.img2.setImageBitmap(getBitmapFromURL(fotoId[position]));
+        holder.img.setImageResource(imageId[position]);
+        holder.img2.setImageResource(fotoId[position]);
+
 
         rowView.setOnClickListener(new OnClickListener() {
             @Override

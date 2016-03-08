@@ -13,12 +13,12 @@
     tools:showIn="@layout/activity_upload_photo">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="1000px"
+        android:layout_height="1000px"
         android:id="@+id/visualizza"
+        android:src="@drawable/fotodef"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/img" />
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="wrap_content"
