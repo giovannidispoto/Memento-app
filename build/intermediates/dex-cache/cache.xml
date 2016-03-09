@@ -2,11 +2,74 @@
 <items version="2" >
 
     <item
-        jar="/Users/giovannidispoto/Documents/dev_env/Memento-app/app/build/intermediates/exploded-aar/com.github.boxme/squarecamera/1.1.0/jars/classes.jar"
+        jar="C:\Users\Mario\.gradle\caches\modules-2\files-2.1\cz.msebera.android\httpclient\4.3.6\526a9f794eab830eae4f23a62c572878b3f491ab\httpclient-4.3.6.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="526a9f794eab830eae4f23a62c572878b3f491ab">
+        <dex dex="C:\Users\Mario\Documents\GitHub\Memento-app\app\build\intermediates\pre-dexed\debug\httpclient-4.3.6_0739ffe859feb58549723b3110c5cb86ae365c65.jar" />
+    </item>
+    <item
+        jar="C:\Users\Mario\Documents\GitHub\Memento-app\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.1.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="5c5699834e9722f1c288fea2de82725d078ba127">
+        <dex dex="C:\Users\Mario\Documents\GitHub\Memento-app\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-23.1.1_1d5df1f6c68cf1aa1fed26c76ffcef32c7d28237.jar" />
+    </item>
+    <item
+        jar="C:\Users\Mario\Documents\GitHub\Memento-app\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\jars\libs\internal_impl-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
+        <dex dex="C:\Users\Mario\Documents\GitHub\Memento-app\app\build\intermediates\pre-dexed\debug\internal_impl-23.1.1_9299d66f4a9e043ebc5fc7f8128d336b09fdffad.jar" />
+    </item>
+    <item
+        jar="C:\Users\Mario\Documents\GitHub\Memento-app\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
+        <dex dex="C:\Users\Mario\Documents\GitHub\Memento-app\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-23.1.1_a50da3bb5f1aa2e0850bf849399e78a42e5e92a2.jar" />
+    </item>
+    <item
+        jar="C:\Users\Mario\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.1.1\support-annotations-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
+        <dex dex="C:\Users\Mario\Documents\GitHub\Memento-app\app\build\intermediates\pre-dexed\debug\support-annotations-23.1.1_964c7be22abbea81dd84d034d57dbbb20e42d927.jar" />
+    </item>
+    <item
+        jar="C:\Users\Mario\Documents\GitHub\Memento-app\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.1.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="09c5e804bc67fc0580360043dff067df574a60d4">
+        <dex dex="C:\Users\Mario\Documents\GitHub\Memento-app\app\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-23.1.1_6c8f1f0ac4096309cb46dde8feab8a7123c0cf85.jar" />
+    </item>
+    <item
+        jar="C:\Users\Mario\.gradle\caches\modules-2\files-2.1\com.loopj.android\android-async-http\1.4.9\386a4339ffe52d5d63e80f9bed8d2b1d1a418249\android-async-http-1.4.9.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="386a4339ffe52d5d63e80f9bed8d2b1d1a418249">
+        <dex dex="C:\Users\Mario\Documents\GitHub\Memento-app\app\build\intermediates\pre-dexed\debug\android-async-http-1.4.9_855bb7b00acb6b321e921bd87b12f1b3977319bb.jar" />
+    </item>
+    <item
+        jar="C:\Users\Mario\Documents\GitHub\Memento-app\app\build\intermediates\exploded-aar\com.github.boxme\squarecamera\1.1.0\jars\classes.jar"
         jumboMode="false"
         revision="23.0.2"
         sha1="8e6add4f1f3d3b756d615121b94a1a76ca038399">
-        <dex dex="/Users/giovannidispoto/Documents/dev_env/Memento-app/app/build/intermediates/pre-dexed/debug/com.github.boxme-squarecamera-1.1.0_15758c83d6a1d0baceb1d480757063419878f633.jar" />
+        <dex dex="C:\Users\Mario\Documents\GitHub\Memento-app\app\build\intermediates\pre-dexed\debug\com.github.boxme-squarecamera-1.1.0_792dd94232e9b5df077f8452e5e058df03cf4d9e.jar" />
+    </item>
+    <item
+        jar="C:\Users\Mario\Documents\GitHub\Memento-app\app\build\intermediates\exploded-aar\com.android.support\design\23.1.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="379471b2bd17d9737c050345c08e8c7d16589784">
+        <dex dex="C:\Users\Mario\Documents\GitHub\Memento-app\app\build\intermediates\pre-dexed\debug\com.android.support-design-23.1.1_7d57b074588b6c299388896f825a94734917cef0.jar" />
+    </item>
+    <item
+        jar="C:\Users\Mario\Documents\GitHub\Memento-app\app\libs\picasso-2.5.2.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
+        <dex dex="C:\Users\Mario\Documents\GitHub\Memento-app\app\build\intermediates\pre-dexed\debug\picasso-2.5.2_48ba2a6a5b0783872f728e9581e458f64e32863d.jar" />
     </item>
 
 </items>

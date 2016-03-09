@@ -72,13 +72,14 @@
                 android:text="@string/action_sign_in"
                 android:textStyle="bold" />
 
-            <TextView
+            <Button
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="49dp"
-                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="@string/register"
-                android:id="@+id/signUp" />
+                android:id="@+id/signUp"
+                android:foreground="#5c5c5c"
+                android:background="@android:color/transparent" />
 
         </LinearLayout>
     </ScrollView>
