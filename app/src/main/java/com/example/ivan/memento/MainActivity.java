@@ -113,19 +113,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
                     Toast b = Toast.makeText(getApplicationContext(), "Si è verificato un errore durante l'acquisizione dell'immagine: \n" + e.toString(), Toast.LENGTH_LONG);
                     b.show();
                 }*/
-
-                final String permission = Manifest.permission.CAMERA;
-                if (ContextCompat.checkSelfPermission(MainActivity.this, permission)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, permission)) {
-                        // Show permission rationale
-                    } else {
-                        // Handle the result in Activity#onRequestPermissionResult(int, String[], int[])
-                        ActivityCompat.requestPermissions(this, new String[]{permission}, REQUEST_CAMERA_PERMISSION);
-                    }
-                } else {
-                    // Start CameraActivity
-                }
             }
         });
     }
