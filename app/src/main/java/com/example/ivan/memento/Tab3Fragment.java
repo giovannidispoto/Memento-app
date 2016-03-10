@@ -3,30 +3,29 @@ package com.example.ivan.memento;
 /**
  * Created by Ivan on 12/02/2016.
  */
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestHandle;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
-
-import cz.msebera.android.httpclient.Header;
 
 public class Tab3Fragment extends Fragment {
     private static String risposta;
     private static JSONObject main;
     static ImageView profilo;
+    GridView grid;
+    String[] web = {"Imagine1","Imagine2","Imagine3","Imagine4","Imagine5","Immagine6"};
+    int[] imageId = {R.drawable.fotodef, R.drawable.fotodef, R.drawable.fotodef, R.drawable.fotodef, R.drawable.fotodef, R.drawable.fotodef};
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -34,7 +33,23 @@ public class Tab3Fragment extends Fragment {
         View V = inflater.inflate(R.layout.tab3_view, container, false);
 
         profilo = (ImageView) V.findViewById(R.id.fotoprofilo);
-        //richiesta json con nome profilo e url foto profilo
+        Picasso.with(getActivity()).load("http://1.bp.blogspot.com/-Puv12pm3Nxk/TbumeypUYCI/AAAAAAAAB0Q/DdJ_X5eSJJU/s1600/cane+05.jpg").into(profilo);
+
+        CustomGrid adapter = new CustomGrid(getContext(), web, imageId);
+        grid=(GridView)V.findViewById(R.id.grid);
+        grid.setAdapter(adapter);
+        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Toast.makeText(getContext(), "You Clicked at " + web[+position], Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        profilo = (ImageView) V.findViewById(R.id.fotoprofilo);
+        /*richiesta json con nome profilo e url foto profilo
         final AsyncHttpClient client = new AsyncHttpClient();
         RequestHandle requestHandle = client.get("www.google.it", new AsyncHttpResponseHandler() {
 
@@ -71,6 +86,7 @@ public class Tab3Fragment extends Fragment {
 
             }
         });
+        */
         return V;
     }
 }

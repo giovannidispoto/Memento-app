@@ -3,22 +3,20 @@ package com.example.ivan.memento;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
-
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -33,6 +31,7 @@ import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 
 import org.json.JSONException;
@@ -43,6 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.impl.cookie.BasicClientCookie;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -230,16 +230,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         risposta = new String(responseBody, "UTF-8");
                         JSONObject main = new JSONObject(risposta);
 
+                            String userId = main.getString("user_id");
+                            String token = main.getString("token");
                             Toast.makeText(getApplicationContext(),risposta,Toast.LENGTH_LONG).show();
-                          /*  PersistentCookieStore cookieStore = new PersistentCookieStore(LoginActivity.this);
+                           PersistentCookieStore cookieStore = new PersistentCookieStore(LoginActivity.this);
                             client.setCookieStore(cookieStore);
-                            BasicClientCookie cookie = new BasicClientCookie("token", "123aaa");
+                            BasicClientCookie cookie = new BasicClientCookie("user_id", userId);
                             cookie.setVersion(1);
                             cookie.setDomain("http://192.168.1.99/memento");
                             cookie.setPath("/");
+                            BasicClientCookie cookie_token = new BasicClientCookie("token", token);
+                            cookie_token.setVersion(1);
+                            cookie_token.setDomain("http://192.168.1.99/memento");
+                            cookie_token.setPath("/");
                             cookieStore.addCookie(cookie);
+                            cookieStore.addCookie(cookie_token);
                             Intent i = new Intent(getBaseContext(),MainActivity.class);
-                            startActivity(i);*/
+                            startActivity(i);
 
                     }catch (JSONException e) {
                         e.printStackTrace();

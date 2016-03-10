@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -23,17 +25,19 @@ import java.net.URL;
 
 public class CustomAdapter extends BaseAdapter{
     String [] result;
+    String [] description;
     Context context;
     int [] imageId;
-    int [] fotoId;
+    String [] fotoId;
     private static LayoutInflater inflater=null;
 
-    public CustomAdapter(Activity mainActivity, String[] prgmNameList, int [] prgmImages, int [] prgmFoto) {
+    public CustomAdapter(Activity mainActivity, String[] prgmNameList, int [] prgmImages, String [] prgmFoto, String [] prgmDescription) {
         // TODO Auto-generated constructor stub
         result=prgmNameList;
         context=mainActivity;
         imageId= prgmImages;
         fotoId = prgmFoto;
+        description = prgmDescription;
         inflater = ( LayoutInflater )context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -60,6 +64,7 @@ public class CustomAdapter extends BaseAdapter{
         TextView tv;
         ImageView img;
         ImageView img2;
+        TextView description;
     }
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -71,13 +76,16 @@ public class CustomAdapter extends BaseAdapter{
         holder.tv=(TextView) rowView.findViewById(R.id.textView1);
         holder.img=(ImageView) rowView.findViewById(R.id.imageView1);
         holder.img2=(ImageView) rowView.findViewById(R.id.imageView2);
+        holder.description=(TextView) rowView.findViewById(R.id.description);
 
         holder.tv.setText(result[position]);
         //holder.img.setImageBitmap(getBitmapFromURL(imageId[position]));
+        Picasso.with(context).load(fotoId[position]).into(holder.img2);
+
         //holder.img2.setImageBitmap(getBitmapFromURL(fotoId[position]));
         holder.img.setImageResource(imageId[position]);
-        holder.img2.setImageResource(fotoId[position]);
-
+        //holder.img2.setImageResource(fotoId[position]);
+        holder.description.setText(description[position]);
 
         rowView.setOnClickListener(new OnClickListener() {
             @Override

@@ -34,8 +34,8 @@ public class Registration extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-        Intent i = new Intent(getBaseContext(),MainActivity.class);
-       //assegnazione risorse
+        Intent i = new Intent(getBaseContext(), MainActivity.class);
+        //assegnazione risorse
         usernameView = (EditText) findViewById(R.id.username);
         passwordView = (EditText) findViewById(R.id.password);
         emailView = (EditText) findViewById(R.id.email);
@@ -51,14 +51,14 @@ public class Registration extends AppCompatActivity {
         });
     }
 
-    private void registration(){
+    private void registration() {
 
-        String username= usernameView.getText().toString();
-        String password=passwordView.getText().toString();
-        String email=emailView.getText().toString();
-        String name=nameView.getText().toString();
-        String surname=surnameView.getText().toString();
-        String date_of_birth=date_of_birthView.getText().toString();
+        String username = usernameView.getText().toString();
+        String password = passwordView.getText().toString();
+        String email = emailView.getText().toString();
+        String name = nameView.getText().toString();
+        String surname = surnameView.getText().toString();
+        String date_of_birth = date_of_birthView.getText().toString();
 
         final AsyncHttpClient client = new AsyncHttpClient();
         RequestParams ps = new RequestParams();
@@ -75,47 +75,47 @@ public class Registration extends AppCompatActivity {
                 focusView = usernameView;
                 cancel = true;
             }
-            if(TextUtils.isEmpty(password)){//il campo non deve essere vuoto
+            if (TextUtils.isEmpty(password)) {//il campo non deve essere vuoto
                 passwordView.setError(getString(R.string.error_field_required));
-                focusView=passwordView;
-                cancel=true;
-            }else if (!isPasswordValid(password)){//password.length>8
+                focusView = passwordView;
+                cancel = true;
+            } else if (!isPasswordValid(password)) {//password.length>8
                 passwordView.setError(getString(R.string.error_invalid_password));
             }
-            if(TextUtils.isEmpty(email)) {//il campo non deve essere vuoto
+            if (TextUtils.isEmpty(email)) {//il campo non deve essere vuoto
                 emailView.setError(getString(R.string.error_field_required));
                 focusView = emailView;
                 cancel = true;
             }
-            if(TextUtils.isEmpty(name)) {//il campo non deve essere vuoto
+            if (TextUtils.isEmpty(name)) {//il campo non deve essere vuoto
                 nameView.setError(getString(R.string.error_field_required));
                 focusView = nameView;
                 cancel = true;
             }
-            if(TextUtils.isEmpty(surname)) {//il campo non deve essere vuoto
+            if (TextUtils.isEmpty(surname)) {//il campo non deve essere vuoto
                 surnameView.setError(getString(R.string.error_field_required));
                 focusView = surnameView;
                 cancel = true;
             }
-            if(TextUtils.isEmpty(date_of_birth)) {//il campo non deve essere vuoto
+            if (TextUtils.isEmpty(date_of_birth)) {//il campo non deve essere vuoto
                 date_of_birthView.setError(getString(R.string.error_field_required));
                 focusView = date_of_birthView;
                 cancel = true;
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             focusView.requestFocus();
-        }else{
-            ps.put("username",username);
-            ps.put("password",password);
-            ps.put("email",email);
-            ps.put("name",name);
+        } else {
+            ps.put("username", username);
+            ps.put("password", password);
+            ps.put("email", email);
+            ps.put("name", name);
             ps.put("surname", surname);
-            ps.put("date_of_birth",date_of_birth);
+            ps.put("date_of_birth", date_of_birth);
             //Invio JSON
             client.post("http://192.168.1.99/memento/?action=auth", ps, new AsyncHttpResponseHandler() {
                 public void onStart() {
@@ -149,10 +149,11 @@ public class Registration extends AppCompatActivity {
 
     }
 
-}
-private boolean isUsernameValid(String username){
+    private boolean isUsernameValid(String username) {
         return username.length() > 4;
-}
-private boolean isPasswordValid(String password){
-    return password.length()>8;
+    }
+
+    private boolean isPasswordValid(String password) {
+        return password.length() > 8;
+    }
 }
