@@ -19,4 +19,15 @@
         android:layout_alignBottom="@+id/fotoprofilo"
         android:layout_toEndOf="@+id/fotoprofilo"
         android:textSize="25dp" />
+
+    <GridView
+        android:numColumns="auto_fit"
+        android:gravity="center"
+        android:columnWidth="100dp"
+        android:stretchMode="columnWidth"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/grid"
+        android:layout_below="@+id/fotoprofilo" />
+
 </RelativeLayout>

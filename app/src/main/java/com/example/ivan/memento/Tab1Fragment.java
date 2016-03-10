@@ -10,17 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
-
-import cz.msebera.android.httpclient.Header;
 
 public class Tab1Fragment extends Fragment {
 
@@ -29,9 +20,10 @@ public class Tab1Fragment extends Fragment {
     static ListView mylist;
 
     //Array che conterranno le foto di profilo - nome utente - foto caricata
-    public static String [] immaginiProfilo;
-    public static String [] fotoCaricate;
-    public static String [] nomiUtente;
+    public static int [] immaginiProfilo = {R.drawable.fotoprofilodef,R.drawable.fotoprofilodef,R.drawable.fotoprofilodef};
+    public static String [] fotoCaricate = {"http://1.bp.blogspot.com/-Puv12pm3Nxk/TbumeypUYCI/AAAAAAAAB0Q/DdJ_X5eSJJU/s1600/cane+05.jpg","http://1.bp.blogspot.com/-Puv12pm3Nxk/TbumeypUYCI/AAAAAAAAB0Q/DdJ_X5eSJJU/s1600/cane+05.jpg","http://1.bp.blogspot.com/-Puv12pm3Nxk/TbumeypUYCI/AAAAAAAAB0Q/DdJ_X5eSJJU/s1600/cane+05.jpg"};
+    public static String [] nomiUtente = {"Utente1","Utente2","Utente3"};
+    public static String [] descrizione = {"Ciaone","Bella foto zio","Pareeee"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,9 +31,9 @@ public class Tab1Fragment extends Fragment {
         View V = inflater.inflate(R.layout.tab1_view, container, false);
 
 
-        final AsyncHttpClient client = new AsyncHttpClient();
+      /*  final AsyncHttpClient client = new AsyncHttpClient();
 
-        client.post("http://www.cacaecheca.it", new AsyncHttpResponseHandler() {
+        client.post("http://www.google.it", new AsyncHttpResponseHandler() {
             public void onStart() {
                 super.onStart();
             }
@@ -66,12 +58,12 @@ public class Tab1Fragment extends Fragment {
 
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-                Toast.makeText(getActivity().getApplicationContext(), "Errore nella richiesta - Home", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Errore nella richiesta - Home", Toast.LENGTH_LONG).show();
             }
-        });
+        });*/
 
         mylist = (ListView) V.findViewById(R.id.lista);
-        mylist.setAdapter(new CustomAdapter(getActivity() , nomiUtente, immaginiProfilo, fotoCaricate));
+        mylist.setAdapter(new CustomAdapter(getActivity() , nomiUtente, immaginiProfilo, fotoCaricate, descrizione));
 
         return V;
     }

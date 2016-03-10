@@ -31,8 +31,10 @@ import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
@@ -40,6 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.impl.cookie.BasicClientCookie;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -66,18 +69,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private UserLoginTask mAuthTask = null;
 
     // UI references.
-    private AutoCompleteTextView mEmailView;
+    private AutoCompleteTextView mUsernameView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
     private String risposta;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Intent i = new Intent(getBaseContext(),MainActivity.class);
+        startActivity(i);
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);//assegnazione risorsa email
+        mUsernameView = (AutoCompleteTextView) findViewById(R.id.textView7);//assegnazione risorsa email
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -92,16 +98,26 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        Button mEmailSignInButton = (Button) findViewById(R.id.sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
             }
         });
+        Button signUpButton = (Button) findViewById(R.id.signUp);
+        signUpButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i= new Intent(LoginActivity.this, Registration.class);
+                startActivity(i);
+            }
+        });
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+      //  Intent i = new Intent(getBaseContext(),LoginActivity.class);
+        // startActivity(i);
     }
 
     private void populateAutoComplete() {
@@ -120,7 +136,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             return true;
         }
         if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-            Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(mUsernameView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
                     .setAction(android.R.string.ok, new View.OnClickListener() {
                         @Override
                         @TargetApi(Build.VERSION_CODES.M)
@@ -158,36 +174,29 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         // Reset errors.
-        mEmailView.setError(null);
+        mUsernameView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
+        if (!TextUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
             cancel = true;
         }
 
         // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            //JSONArray credentials = new JSONArray();
-
+        if (TextUtils.isEmpty(username)) {
+            mUsernameView.setError(getString(R.string.error_field_required));
+            focusView = mUsernameView;
             cancel = true;
         }
-
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -196,30 +205,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(username, password);
             mAuthTask.execute((Void) null);
-            JSONObject obj = new JSONObject(); //creazione del JSON
 
-            try {
-                obj.put("username", "pippo");
-                obj.put("password", password);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
             //Richiesta
             final AsyncHttpClient client = new AsyncHttpClient();
             RequestParams ps = new RequestParams();
             try {
-                ps.put("key", obj.toString());
-                ps.put("username",email);
+                ps.put("username",username);
                 ps.put("password",password);
             }catch (Exception e) {
                 e.printStackTrace();
             }
-
             //Invio JSON
-            client.post("http://10.0.0.4/memento/?action=auth", ps, new AsyncHttpResponseHandler() {
+            client.post("http://192.168.1.99/memento/?action=auth", ps, new AsyncHttpResponseHandler() {
                 public void onStart() {
                     super.onStart();
                 }
@@ -229,12 +228,29 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     Toast.makeText(getApplicationContext(), "Trasferimento avvenuto con successo", Toast.LENGTH_LONG).show();
                     try {
                         risposta = new String(responseBody, "UTF-8");
-                        //JSONObject main=new JSONObject(risposta);
-                        Toast.makeText(getApplicationContext(),risposta,Toast.LENGTH_LONG).show();
-                     /*catch (JSONException e) {
-                        e.printStackTrace();*/
-                            Intent i = new Intent(getApplicationContext() ,MainActivity.class);
-        startActivity(i);
+                        JSONObject main = new JSONObject(risposta);
+
+                            String userId = main.getString("user_id");
+                            String token = main.getString("token");
+                            Toast.makeText(getApplicationContext(),risposta,Toast.LENGTH_LONG).show();
+                           PersistentCookieStore cookieStore = new PersistentCookieStore(LoginActivity.this);
+                            client.setCookieStore(cookieStore);
+                            BasicClientCookie cookie = new BasicClientCookie("user_id", userId);
+                            cookie.setVersion(1);
+                            cookie.setDomain("http://192.168.1.99/memento");
+                            cookie.setPath("/");
+                            BasicClientCookie cookie_token = new BasicClientCookie("token", token);
+                            cookie_token.setVersion(1);
+                            cookie_token.setDomain("http://192.168.1.99/memento");
+                            cookie_token.setPath("/");
+                            cookieStore.addCookie(cookie);
+                            cookieStore.addCookie(cookie_token);
+                            Intent i = new Intent(getBaseContext(),MainActivity.class);
+                            startActivity(i);
+
+                    }catch (JSONException e) {
+                        e.printStackTrace();
+
                     }catch(UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
@@ -246,22 +262,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
             });
         }
-
-
-    }
-
-    private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own login
-        return (email.length() > 0 && true /*email.matches("^[_A-Za-z0-9-]+(\\\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+\n" +
-                "(\\\\.[A-Za-z0-9-]+)*(\\\\.[A-Za-z]{2,})")*/);
+        Intent i = new Intent(getBaseContext(),LoginActivity.class);
+        startActivity(i);
 
     }
-
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
-    }
-
     /**
      * Shows the progress UI and hides the login form.
      */
@@ -338,7 +342,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 new ArrayAdapter<>(LoginActivity.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
-        mEmailView.setAdapter(adapter);
+        mUsernameView.setAdapter(adapter);
     }
 
 
@@ -409,4 +413,3 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 }
-

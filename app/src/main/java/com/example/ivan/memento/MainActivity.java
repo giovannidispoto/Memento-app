@@ -4,17 +4,15 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.view.ViewPager;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
+
+import com.desmond.squarecamera.CameraActivity;
 
 import org.json.JSONObject;
 
@@ -41,7 +39,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
         mTabHost.addTab(mTabHost.newTabSpec("tab1").setIndicator("Home"),
                 Tab1Fragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("tab2").setIndicator("Interessi"),
+        mTabHost.addTab(mTabHost.newTabSpec("tab2").setIndicator("Scopri"),
                 Tab2Fragment.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("tab3").setIndicator("Profilo"),
                 Tab3Fragment.class, null);
@@ -93,15 +91,30 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    foto = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
+                /*try {
+                   foto = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
 
                     Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(foto));
+                    intentCamera.putExtra("outputX", 500);
+                    intentCamera.putExtra("outputY", 500);
+                    intentCamera.putExtra("aspectX", 1);
+                    intentCamera.putExtra("aspectY", 1);
+                    intentCamera.putExtra("scale", true);
                     startActivityForResult(intentCamera, CAMERA_REQUEST);
 
                 }catch (Exception e){
                     Toast b = Toast.makeText(getApplicationContext(), "Si è verificato un errore durante l'acquisizione dell'immagine: \n" + e.toString(), Toast.LENGTH_LONG);
+                    b.show();
+                }*/
+
+                try {
+                    //foto = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
+                    Intent startCustomCameraIntent = new Intent(MainActivity.this, CameraActivity.class);
+                    //startCustomCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(foto));
+                    startActivityForResult(startCustomCameraIntent, CAMERA_REQUEST);
+                }catch (Exception e){
+                    Toast b = Toast.makeText(getApplicationContext(), "Si è verificato un errore durante l'avvio della camera: \n" + e.toString(), Toast.LENGTH_LONG);
                     b.show();
                 }
             }
@@ -110,11 +123,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAMERA_REQUEST && resultCode==RESULT_OK) {
-            //Provo a recuperare i dati, in caso si verifichi qualche errore visualizzo un Toast con la descrizione.
+        if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
             try {
-                Uri photoUri = Uri.fromFile(foto);
-                Bitmap fotoDati = android.provider.MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.fromFile(foto));
+                Uri photoUri = data.getData();;
+                Bitmap fotoDati = android.provider.MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
                 Intent a = new Intent(getApplicationContext(), upload_photo.class);
                 a.putExtra("photo", photoUri.toString());
                 startActivity(a);
@@ -122,11 +134,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
                 Toast t = Toast.makeText(this, "Si è verificato un errore durante l'acquisizione dell'immagine:\n" + e.toString(), Toast.LENGTH_LONG);
                 t.show();
             }
-
+        }
+        else {
+            return;
         }
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -146,7 +160,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     @Override
     public void onClick(View v) {
