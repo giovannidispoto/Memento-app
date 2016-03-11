@@ -80,8 +80,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Intent i = new Intent(getBaseContext(),MainActivity.class);
-        startActivity(i);
+        //Intent i = new Intent(getBaseContext(),MainActivity.class);
+        //startActivity(i);
         // Set up the login form.
         mUsernameView = (AutoCompleteTextView) findViewById(R.id.textView7);//assegnazione risorsa email
         populateAutoComplete();
@@ -232,27 +232,34 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                             String userId = main.getString("user_id");
                             String token = main.getString("token");
-                            Toast.makeText(getApplicationContext(),risposta,Toast.LENGTH_LONG).show();
-                           PersistentCookieStore cookieStore = new PersistentCookieStore(LoginActivity.this);
-                            client.setCookieStore(cookieStore);
-                            BasicClientCookie cookie = new BasicClientCookie("user_id", userId);
-                            cookie.setVersion(1);
-                            cookie.setDomain("http://192.168.1.99/memento");
-                            cookie.setPath("/");
-                            BasicClientCookie cookie_token = new BasicClientCookie("token", token);
-                            cookie_token.setVersion(1);
-                            cookie_token.setDomain("http://192.168.1.99/memento");
-                            cookie_token.setPath("/");
-                            cookieStore.addCookie(cookie);
-                            cookieStore.addCookie(cookie_token);
-                            Intent i = new Intent(getBaseContext(),MainActivity.class);
-                            startActivity(i);
+                            Boolean success = main.getBoolean("success");
+                            //Toast.makeText(getApplicationContext(),risposta,Toast.LENGTH_LONG).show();
+                            if (success) {
+                                PersistentCookieStore cookieStore = new PersistentCookieStore(LoginActivity.this);
+                                client.setCookieStore(cookieStore);
+                                BasicClientCookie cookie = new BasicClientCookie("user_id", userId);
+                                cookie.setVersion(1);
+                                cookie.setDomain("http://192.168.1.99/memento");
+                                cookie.setPath("/");
 
+                                BasicClientCookie cookie_token = new BasicClientCookie("token", token);
+                                cookie_token.setVersion(1);
+                                cookie_token.setDomain("http://192.168.1.99/memento");
+                                cookie_token.setPath("/");
+
+                                cookieStore.addCookie(cookie);
+                                cookieStore.addCookie(cookie_token);
+
+                                Intent i = new Intent(getBaseContext(), MainActivity.class);
+                                startActivity(i);
+                            }else {
+                                Toast.makeText(getApplicationContext(), "Utente o password errati", Toast.LENGTH_LONG).show();
+                            }
                     }catch (JSONException e) {
                         e.printStackTrace();
-
                     }catch(UnsupportedEncodingException e) {
                         e.printStackTrace();
+                        Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                     }
                 }
 

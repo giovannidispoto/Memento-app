@@ -23,8 +23,8 @@ public class Tab3Fragment extends Fragment {
     private static JSONObject main;
     static ImageView profilo;
     GridView grid;
-    String[] web = {"Imagine1","Imagine2","Imagine3","Imagine4","Imagine5","Immagine6"};
-    int[] imageId = {R.drawable.fotodef, R.drawable.fotodef, R.drawable.fotodef, R.drawable.fotodef, R.drawable.fotodef, R.drawable.fotodef};
+    String[] descrizione = {"Imagine1","Imagine2","Imagine3","Imagine4","Imagine5","Immagine6"};
+    String[] immagine = {"http://www.superedo.it/sfondi/sfondi/Animali/Gatti/gatti_69.jpg","http://www.superedo.it/sfondi/sfondi/Animali/Gatti/gatti_69.jpg","http://www.superedo.it/sfondi/sfondi/Animali/Gatti/gatti_69.jpg","http://www.superedo.it/sfondi/sfondi/Animali/Gatti/gatti_69.jpg","http://www.superedo.it/sfondi/sfondi/Animali/Gatti/gatti_69.jpg","http://www.superedo.it/sfondi/sfondi/Animali/Gatti/gatti_69.jpg"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,7 +35,7 @@ public class Tab3Fragment extends Fragment {
         profilo = (ImageView) V.findViewById(R.id.fotoprofilo);
         Picasso.with(getActivity()).load("http://1.bp.blogspot.com/-Puv12pm3Nxk/TbumeypUYCI/AAAAAAAAB0Q/DdJ_X5eSJJU/s1600/cane+05.jpg").into(profilo);
 
-        CustomGrid adapter = new CustomGrid(getContext(), web, imageId);
+        CustomGrid adapter = new CustomGrid(getContext(), descrizione, immagine);
         grid=(GridView)V.findViewById(R.id.grid);
         grid.setAdapter(adapter);
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -43,7 +43,7 @@ public class Tab3Fragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(getContext(), "You Clicked at " + web[+position], Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "You Clicked at " + descrizione[+position], Toast.LENGTH_SHORT).show();
 
             }
         });

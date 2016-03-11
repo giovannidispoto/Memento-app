@@ -10,8 +10,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+
+import cz.msebera.android.httpclient.Header;
 
 public class Tab1Fragment extends Fragment {
 
@@ -20,18 +30,22 @@ public class Tab1Fragment extends Fragment {
     static ListView mylist;
 
     //Array che conterranno le foto di profilo - nome utente - foto caricata
-    public static int [] immaginiProfilo = {R.drawable.fotoprofilodef,R.drawable.fotoprofilodef,R.drawable.fotoprofilodef};
-    public static String [] fotoCaricate = {"http://1.bp.blogspot.com/-Puv12pm3Nxk/TbumeypUYCI/AAAAAAAAB0Q/DdJ_X5eSJJU/s1600/cane+05.jpg","http://1.bp.blogspot.com/-Puv12pm3Nxk/TbumeypUYCI/AAAAAAAAB0Q/DdJ_X5eSJJU/s1600/cane+05.jpg","http://1.bp.blogspot.com/-Puv12pm3Nxk/TbumeypUYCI/AAAAAAAAB0Q/DdJ_X5eSJJU/s1600/cane+05.jpg"};
-    public static String [] nomiUtente = {"Utente1","Utente2","Utente3"};
-    public static String [] descrizione = {"Ciaone","Bella foto zio","Pareeee"};
+    public static ArrayList immaginiProfilo;
+    public static ArrayList fotoCaricate;
+    public static ArrayList nomiUtente;
+    public static ArrayList descrizione;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View V = inflater.inflate(R.layout.tab1_view, container, false);
+        immaginiProfilo = new ArrayList();
+        fotoCaricate = new ArrayList();
+        nomiUtente = new ArrayList();
+        descrizione = new ArrayList();
 
 
-      /*  final AsyncHttpClient client = new AsyncHttpClient();
+       final AsyncHttpClient client = new AsyncHttpClient();
 
         client.post("http://www.google.it", new AsyncHttpResponseHandler() {
             public void onStart() {
@@ -44,9 +58,14 @@ public class Tab1Fragment extends Fragment {
                     risposta = new String(responseBody, "UTF-8");
                     try {
                         main = new JSONObject(risposta);
+                        for(int i = 0; i < main.length(); i++){
+                            JSONObject obj = main.getJSONObject(String.valueOf(i));
+                            immaginiProfilo.add(obj.getString("profile_pic"));
+                            fotoCaricate.add(obj.getString("photo"));
+                            nomiUtente.add(obj.getString("user"));
+                            descrizione.add(obj.getString("description"));
 
-                        //qui ci dovra essere il parse del json e si andra a riempire i tre array
-                        //creati in alto
+                        }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -60,7 +79,7 @@ public class Tab1Fragment extends Fragment {
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
                 Toast.makeText(getContext(), "Errore nella richiesta - Home", Toast.LENGTH_LONG).show();
             }
-        });*/
+        });
 
         mylist = (ListView) V.findViewById(R.id.lista);
         mylist.setAdapter(new CustomAdapter(getActivity() , nomiUtente, immaginiProfilo, fotoCaricate, descrizione));

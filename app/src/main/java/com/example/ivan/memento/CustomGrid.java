@@ -10,21 +10,23 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
+
 public class CustomGrid extends BaseAdapter{
     private Context mContext;
-    private final String[] web;
-    private final int[] Imageid;
+    private final String[] descrizione;
+    private final String[] immagine;
 
-    public CustomGrid(Context c,String[] web,int[] Imageid ) {
+    public CustomGrid(Context c, String[] vardescrizione, String[] varimmagine ) {
         mContext = c;
-        this.Imageid = Imageid;
-        this.web = web;
+        this.immagine = varimmagine;
+        this.descrizione = vardescrizione;
     }
 
     @Override
     public int getCount() {
         // TODO Auto-generated method stub
-        return web.length;
+        return descrizione.length;
     }
 
     @Override
@@ -51,7 +53,7 @@ public class CustomGrid extends BaseAdapter{
             grid = new View(mContext);
             grid = inflater.inflate(R.layout.gridlayout, null);
             ImageView imageView = (ImageView)grid.findViewById(R.id.grid_image);
-            imageView.setImageResource(Imageid[position]);
+            Picasso.with(mContext).load(immagine[position]).into(imageView);
         } else {
             grid = (View) convertView;
         }

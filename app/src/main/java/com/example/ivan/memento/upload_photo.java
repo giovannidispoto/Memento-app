@@ -36,7 +36,6 @@ public class upload_photo extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_photo);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         getWindow().setTitle("Inserisci una foto");
         ImageView img = (ImageView) findViewById(R.id.visualizza);
         desc = (EditText) findViewById(R.id.descrizione);

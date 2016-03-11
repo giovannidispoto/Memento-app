@@ -73,10 +73,10 @@
             android:layout_height="wrap_content"
             android:text="Descrizione..."
             android:id="@+id/description"
-            android:layout_alignBottom="@+id/imageView2"
+            android:textSize="20dp"
+            android:layout_above="@+id/like"
             android:layout_alignParentStart="true"
-            android:layout_alignEnd="@+id/commenti"
-            android:textSize="20dp" />
+            android:layout_alignEnd="@+id/commenti" />
     </RelativeLayout>
 
 

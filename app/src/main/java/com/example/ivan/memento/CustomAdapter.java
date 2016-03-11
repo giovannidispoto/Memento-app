@@ -4,9 +4,6 @@ package com.example.ivan.memento; /**
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,33 +15,29 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.ArrayList;
 
 public class CustomAdapter extends BaseAdapter{
-    String [] result;
-    String [] description;
+    ArrayList nomeutente;
+    ArrayList description;
     Context context;
-    int [] imageId;
-    String [] fotoId;
+    ArrayList immagineprofilo;
+    ArrayList fotocaricata;
     private static LayoutInflater inflater=null;
 
-    public CustomAdapter(Activity mainActivity, String[] prgmNameList, int [] prgmImages, String [] prgmFoto, String [] prgmDescription) {
-        // TODO Auto-generated constructor stub
-        result=prgmNameList;
+    public CustomAdapter(Activity mainActivity, ArrayList varnomeutente, ArrayList varimmagineprofilo, ArrayList varfotocaricata, ArrayList vardescription) {
+
+        nomeutente=varnomeutente;
         context=mainActivity;
-        imageId= prgmImages;
-        fotoId = prgmFoto;
-        description = prgmDescription;
-        inflater = ( LayoutInflater )context.
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        immagineprofilo= varimmagineprofilo;
+        fotocaricata = varfotocaricata;
+        description = vardescription;
+        inflater = ( LayoutInflater )context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
     @Override
     public int getCount() {
         // TODO Auto-generated method stub
-        return result.length;
+        return nomeutente.size();
     }
 
     @Override
@@ -61,10 +54,10 @@ public class CustomAdapter extends BaseAdapter{
 
     public class Holder
     {
-        TextView tv;
-        ImageView img;
-        ImageView img2;
-        TextView description;
+        TextView granomeutente;
+        ImageView grafotoprofilo;
+        ImageView grafotocaricata;
+        TextView gradescription;
     }
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -73,46 +66,23 @@ public class CustomAdapter extends BaseAdapter{
         View rowView;
         rowView = inflater.inflate(R.layout.program_list, null);
 
-        holder.tv=(TextView) rowView.findViewById(R.id.textView1);
-        holder.img=(ImageView) rowView.findViewById(R.id.imageView1);
-        holder.img2=(ImageView) rowView.findViewById(R.id.imageView2);
-        holder.description=(TextView) rowView.findViewById(R.id.description);
+        holder.granomeutente=(TextView) rowView.findViewById(R.id.textView1);
+        holder.grafotoprofilo=(ImageView) rowView.findViewById(R.id.imageView1);
+        holder.grafotocaricata=(ImageView) rowView.findViewById(R.id.imageView2);
+        holder.gradescription=(TextView) rowView.findViewById(R.id.description);
 
-        holder.tv.setText(result[position]);
-        //holder.img.setImageBitmap(getBitmapFromURL(imageId[position]));
-        Picasso.with(context).load(fotoId[position]).into(holder.img2);
-
-        //holder.img2.setImageBitmap(getBitmapFromURL(fotoId[position]));
-        holder.img.setImageResource(imageId[position]);
-        //holder.img2.setImageResource(fotoId[position]);
-        holder.description.setText(description[position]);
+        holder.granomeutente.setText(nomeutente.get(position).toString());
+        Picasso.with(context).load(immagineprofilo.get(position).toString()).into(holder.grafotoprofilo);
+        Picasso.with(context).load(fotocaricata.get(position).toString()).into(holder.grafotocaricata);
+        holder.gradescription.setText(description.get(position).toString());
 
         rowView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Toast.makeText(context, "You Clicked "+result[position], Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "You Clicked "+nomeutente.get(position).toString(), Toast.LENGTH_LONG).show();
             }
         });
         return rowView;
     }
-
-    public static Bitmap getBitmapFromURL(String src) {
-        try {
-            Log.e("src",src);
-            URL url = new URL(src);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            Log.e("Bitmap", "returned");
-            return myBitmap;
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.e("Exception",e.getMessage());
-            return null;
-        }
-    }
-
 }
