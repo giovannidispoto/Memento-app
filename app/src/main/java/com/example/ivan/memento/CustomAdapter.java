@@ -18,20 +18,22 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class CustomAdapter extends BaseAdapter{
-    ArrayList nomeutente;
-    ArrayList description;
+    ArrayList<String> nomeutente;
+    ArrayList<String> description;
     Context context;
-    ArrayList immagineprofilo;
-    ArrayList fotocaricata;
+    ArrayList<String> immagineprofilo;
+    ArrayList<String> fotocaricata;
+    ArrayList<String> data;
     private static LayoutInflater inflater=null;
 
-    public CustomAdapter(Activity mainActivity, ArrayList varnomeutente, ArrayList varimmagineprofilo, ArrayList varfotocaricata, ArrayList vardescription) {
+    public CustomAdapter(Activity mainActivity, ArrayList<String> varnomeutente, ArrayList<String>varimmagineprofilo, ArrayList<String> varfotocaricata, ArrayList<String> vardescription, ArrayList<String> data) {
 
         nomeutente=varnomeutente;
         context=mainActivity;
         immagineprofilo= varimmagineprofilo;
         fotocaricata = varfotocaricata;
         description = vardescription;
+        this.data = data;
         inflater = ( LayoutInflater )context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
     @Override
@@ -58,6 +60,7 @@ public class CustomAdapter extends BaseAdapter{
         ImageView grafotoprofilo;
         ImageView grafotocaricata;
         TextView gradescription;
+        TextView data;
     }
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -71,16 +74,16 @@ public class CustomAdapter extends BaseAdapter{
         holder.grafotocaricata=(ImageView) rowView.findViewById(R.id.imageView2);
         holder.gradescription=(TextView) rowView.findViewById(R.id.description);
 
-        holder.granomeutente.setText(nomeutente.get(position).toString());
-        Picasso.with(context).load(immagineprofilo.get(position).toString()).into(holder.grafotoprofilo);
-        Picasso.with(context).load(fotocaricata.get(position).toString()).into(holder.grafotocaricata);
-        holder.gradescription.setText(description.get(position).toString());
+        holder.granomeutente.setText(nomeutente.get(position));
+        Picasso.with(context).load(immagineprofilo.get(position)).into(holder.grafotoprofilo);
+        Picasso.with(context).load(fotocaricata.get(position)).into(holder.grafotocaricata);
+        holder.gradescription.setText(description.get(position));
 
         rowView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Toast.makeText(context, "You Clicked "+nomeutente.get(position).toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "You Clicked "+nomeutente.get(position), Toast.LENGTH_LONG).show();
             }
         });
         return rowView;
