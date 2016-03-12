@@ -18,20 +18,23 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class CustomAdapter extends BaseAdapter{
-    ArrayList nomeutente;
-    ArrayList description;
+    ArrayList<String> nomeutente;
+    ArrayList<String>  description;
     Context context;
-    ArrayList immagineprofilo;
-    ArrayList fotocaricata;
+    ArrayList<String>  immagineprofilo;
+    ArrayList<String> fotocaricata;
+    ArrayList<String> data;
+
     private static LayoutInflater inflater=null;
 
-    public CustomAdapter(Activity mainActivity, ArrayList varnomeutente, ArrayList varimmagineprofilo, ArrayList varfotocaricata, ArrayList vardescription) {
+    public CustomAdapter(Activity mainActivity, ArrayList<String>  varnomeutente, ArrayList<String>  varimmagineprofilo, ArrayList<String> varfotocaricata, ArrayList<String>  vardescription, ArrayList<String>  data) {
 
         nomeutente=varnomeutente;
         context=mainActivity;
         immagineprofilo= varimmagineprofilo;
         fotocaricata = varfotocaricata;
         description = vardescription;
+        this.data = data;
         inflater = ( LayoutInflater )context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
     @Override
@@ -58,6 +61,7 @@ public class CustomAdapter extends BaseAdapter{
         ImageView grafotoprofilo;
         ImageView grafotocaricata;
         TextView gradescription;
+        TextView data;
     }
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -66,10 +70,10 @@ public class CustomAdapter extends BaseAdapter{
         View rowView;
         rowView = inflater.inflate(R.layout.program_list, null);
 
-        holder.granomeutente=(TextView) rowView.findViewById(R.id.textView1);
-        holder.grafotoprofilo=(ImageView) rowView.findViewById(R.id.imageView1);
-        holder.grafotocaricata=(ImageView) rowView.findViewById(R.id.imageView2);
-        holder.gradescription=(TextView) rowView.findViewById(R.id.description);
+        holder.granomeutente = (TextView) rowView.findViewById(R.id.textView1);
+        holder.grafotoprofilo = (ImageView) rowView.findViewById(R.id.imageView1);
+        holder.grafotocaricata = (ImageView) rowView.findViewById(R.id.imageView2);
+        holder.gradescription = (TextView) rowView.findViewById(R.id.description);
 
         holder.granomeutente.setText(nomeutente.get(position).toString());
         Picasso.with(context).load(immagineprofilo.get(position).toString()).into(holder.grafotoprofilo);

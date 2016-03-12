@@ -7,12 +7,14 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -34,12 +36,16 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.w3c.dom.Text;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.impl.cookie.BasicClientCookie;
@@ -74,6 +80,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     private String risposta;
+    private TextView registrati;
 
 
     @Override
@@ -105,8 +112,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 attemptLogin();
             }
         });
-        Button signUpButton = (Button) findViewById(R.id.signUp);
-        signUpButton.setOnClickListener(new OnClickListener() {
+        registrati = (TextView) findViewById(R.id.signUp);
+        registrati.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i= new Intent(LoginActivity.this, Registration.class);
@@ -116,8 +123,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+
       //  Intent i = new Intent(getBaseContext(),LoginActivity.class);
         // startActivity(i);
+
     }
 
     private void populateAutoComplete() {
@@ -185,7 +195,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password)) {
+      /*  if (TextUtils.isEmpty(password)) {
             mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
             cancel = true;
@@ -196,7 +206,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mUsernameView.setError(getString(R.string.error_field_required));
             focusView = mUsernameView;
             cancel = true;
-        }
+        }*/
+
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -204,9 +215,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
-            mAuthTask = new UserLoginTask(username, password);
-            mAuthTask.execute((Void) null);
+           // showProgress(true);
+            //mAuthTask = new UserLoginTask(username, password);
+            //mAuthTask.execute((Void) null);
 
             //Richiesta
             final AsyncHttpClient client = new AsyncHttpClient();
@@ -225,40 +236,31 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                    Toast.makeText(getApplicationContext(), "Trasferimento avvenuto con successo", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "Trasferimento avvenuto con successo", Toast.LENGTH_LONG).show();
                     try {
+
                         risposta = new String(responseBody, "UTF-8");
                         JSONObject main = new JSONObject(risposta);
 
-                            String userId = main.getString("user_id");
-                            String token = main.getString("token");
-                            Boolean success = main.getBoolean("success");
-                            //Toast.makeText(getApplicationContext(),risposta,Toast.LENGTH_LONG).show();
+
+                            boolean success = main.getBoolean("success"); //controllo se login è stato effettuato
+
+
                             if (success) {
-                                PersistentCookieStore cookieStore = new PersistentCookieStore(LoginActivity.this);
-                                client.setCookieStore(cookieStore);
-                                BasicClientCookie cookie = new BasicClientCookie("user_id", userId);
-                                cookie.setVersion(1);
-                                cookie.setDomain("http://192.168.1.99/memento");
-                                cookie.setPath("/");
-
-                                BasicClientCookie cookie_token = new BasicClientCookie("token", token);
-                                cookie_token.setVersion(1);
-                                cookie_token.setDomain("http://192.168.1.99/memento");
-                                cookie_token.setPath("/");
-
-                                cookieStore.addCookie(cookie);
-                                cookieStore.addCookie(cookie_token);
+                                String userId = main.getString("user_id");
+                                String token = main.getString("token");
+                                SharedPreferences pr = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                                SharedPreferences.Editor editor = pr.edit();
+                                editor.putString("memento_token",token); //salvo token
+                                editor.putString("memento_user", userId); //salvo username
+                                editor.commit();
 
                                 Intent i = new Intent(getBaseContext(), MainActivity.class);
                                 startActivity(i);
                             }else {
                                 Toast.makeText(getApplicationContext(), "Utente o password errati", Toast.LENGTH_LONG).show();
                             }
-                    }catch (JSONException e) {
-                        e.printStackTrace();
-                    }catch(UnsupportedEncodingException e) {
-                        e.printStackTrace();
+                    }catch (Exception e) {
                         Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                     }
                 }
@@ -269,8 +271,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
             });
         }
-        Intent i = new Intent(getBaseContext(),LoginActivity.class);
-        startActivity(i);
+
 
     }
     /**
