@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f4f4f4">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/fotoprofilo"
+        android:src="@drawable/fotoprofilodef" />
+
+    <TextView
+        android:paddingLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="nome utente"
+        android:id="@+id/textView6"
+        android:layout_alignBottom="@+id/fotoprofilo"
+        android:layout_toEndOf="@+id/fotoprofilo"
+        android:textSize="25dp" />
+
+    <GridView
+        android:paddingTop="10dp"
+        android:numColumns="auto_fit"
+        android:gravity="center"
+        android:columnWidth="100dp"
+        android:stretchMode="columnWidth"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/grid"
+        android:layout_below="@+id/fotoprofilo" />
+
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New ToggleButton"
+        android:textOn="seguito"
+        android:textOff="segui"
+        android:id="@+id/toggleButton"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

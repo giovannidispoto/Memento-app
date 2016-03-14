@@ -30,22 +30,28 @@ public class Tab1Fragment extends Fragment {
     static ListView mylist;
 
     //Array che conterranno le foto di profilo - nome utente - foto caricata
-    public static ArrayList immaginiProfilo;
-    public static ArrayList fotoCaricate;
-    public static ArrayList nomiUtente;
-    public static ArrayList descrizione;
+    public static ArrayList<String> immaginiProfilo;
+    public static ArrayList<String> fotoCaricate;
+    public static ArrayList<String> nomiUtente;
+    public static ArrayList<String> descrizione;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View V = inflater.inflate(R.layout.tab1_view, container, false);
-        immaginiProfilo = new ArrayList();
-        fotoCaricate = new ArrayList();
-        nomiUtente = new ArrayList();
-        descrizione = new ArrayList();
+        immaginiProfilo = new ArrayList<>();
+        fotoCaricate = new ArrayList<>();
+        nomiUtente = new ArrayList<>();
+        descrizione = new ArrayList<>();
 
+        for(int i = 0; i < 2; i++){
+            immaginiProfilo.add("http://www.grandain.com/wp-content/uploads/2014/04/cane_1.jpg");
+            fotoCaricate.add("http://www.grandain.com/wp-content/uploads/2014/04/cane_1.jpg");
+            nomiUtente.add("Mario Testa");
+            descrizione.add("ciao");
+        }
 
-       final AsyncHttpClient client = new AsyncHttpClient();
+        final AsyncHttpClient client = new AsyncHttpClient();
 
         client.post("http://www.google.it", new AsyncHttpResponseHandler() {
             public void onStart() {
@@ -64,9 +70,7 @@ public class Tab1Fragment extends Fragment {
                             fotoCaricate.add(obj.getString("photo"));
                             nomiUtente.add(obj.getString("user"));
                             descrizione.add(obj.getString("description"));
-
                         }
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -80,6 +84,7 @@ public class Tab1Fragment extends Fragment {
                 Toast.makeText(getContext(), "Errore nella richiesta - Home", Toast.LENGTH_LONG).show();
             }
         });
+
 
         mylist = (ListView) V.findViewById(R.id.lista);
         mylist.setAdapter(new CustomAdapter(getActivity() , nomiUtente, immaginiProfilo, fotoCaricate, descrizione));

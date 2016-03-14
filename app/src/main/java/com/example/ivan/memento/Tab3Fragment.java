@@ -44,7 +44,6 @@ public class Tab3Fragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 Toast.makeText(getContext(), "You Clicked at " + descrizione[+position], Toast.LENGTH_SHORT).show();
-
             }
         });
 

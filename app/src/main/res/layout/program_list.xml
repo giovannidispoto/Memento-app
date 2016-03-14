@@ -6,7 +6,7 @@
     android:weightSum="1"
     android:paddingBottom="10dp"
     android:paddingTop="10dp"
-    android:background="#f5f5f5">
+    android:background="#ffffff">
 
     <RelativeLayout
         android:layout_width="387dp"
@@ -14,20 +14,23 @@
         android:id="@+id/relativeLayout">
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/fotoprofilo"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/fotoprofilodef" />
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/nomeutente"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
             android:textSize="25sp"
             android:text="TextView"
             android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/imageView1" />
+            android:layout_toEndOf="@+id/fotoprofilo"
+            android:clickable="false"
+            android:contextClickable="false"
+            android:linksClickable="true" />
 
     </RelativeLayout>
 
@@ -41,9 +44,9 @@
         android:layout_alignParentEnd="true">
 
         <ImageView
-            android:layout_width="500dp"
-            android:layout_height="500dp"
-            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/fotocaricata"
             android:src="@drawable/fotodef"
             android:layout_above="@+id/like"
             android:layout_alignParentStart="true"

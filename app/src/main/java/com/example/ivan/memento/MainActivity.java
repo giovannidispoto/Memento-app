@@ -1,7 +1,6 @@
 package com.example.ivan.memento;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -22,6 +21,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
     private ViewPager mViewPager;
     private static final int CAMERA_REQUEST = 123;
+    private static final int PICK_PHOTO = 12;
     private static File foto = null;
     private static String risposta;
     private static JSONObject main;
@@ -109,14 +109,22 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
                 }*/
 
                 try {
-                    //foto = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
                     Intent startCustomCameraIntent = new Intent(MainActivity.this, CameraActivity.class);
-                    //startCustomCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(foto));
                     startActivityForResult(startCustomCameraIntent, CAMERA_REQUEST);
-                }catch (Exception e){
+                } catch (Exception e) {
                     Toast b = Toast.makeText(getApplicationContext(), "Si è verificato un errore durante l'avvio della camera: \n" + e.toString(), Toast.LENGTH_LONG);
                     b.show();
                 }
+            }
+        });
+
+        FloatingActionButton fabuno = (FloatingActionButton) findViewById(R.id.fabuno);
+        fabuno.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(intent, PICK_PHOTO);
             }
         });
     }
@@ -126,16 +134,23 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
             try {
                 Uri photoUri = data.getData();;
-                Bitmap fotoDati = android.provider.MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
                 Intent a = new Intent(getApplicationContext(), upload_photo.class);
                 a.putExtra("photo", photoUri.toString());
                 startActivity(a);
             } catch (Exception e) {
-                Toast t = Toast.makeText(this, "Si è verificato un errore durante l'acquisizione dell'immagine:\n" + e.toString(), Toast.LENGTH_LONG);
-                t.show();
+                Toast.makeText(this, "Si è verificato un errore durante l'acquisizione dell'immagine:\n" + e.toString(), Toast.LENGTH_LONG).show();
             }
         }
-        else {
+        else if (requestCode == PICK_PHOTO && resultCode == RESULT_OK){
+            try {
+                Uri photoUri = data.getData();;
+                Intent a = new Intent(getApplicationContext(), upload_photo.class);
+                a.putExtra("photo", photoUri.toString());
+                startActivity(a);
+            } catch (Exception e) {
+                Toast.makeText(this, "Si è verificato un errore durante la selezione dell'immagine:\n" + e.toString(), Toast.LENGTH_LONG).show();
+            }
+        }else {
             return;
         }
     }
