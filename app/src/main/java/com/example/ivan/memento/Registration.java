@@ -47,6 +47,7 @@ public class Registration extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 registration();
+                startActivity(new Intent(Registration.this,MainActivity.class));
             }
         });
     }
@@ -81,6 +82,8 @@ public class Registration extends AppCompatActivity {
                 cancel = true;
             } else if (!isPasswordValid(password)) {//password.length>8
                 passwordView.setError(getString(R.string.error_invalid_password));
+                focusView = usernameView;
+                cancel=true;
             }
             if (TextUtils.isEmpty(email)) {//il campo non deve essere vuoto
                 emailView.setError(getString(R.string.error_field_required));

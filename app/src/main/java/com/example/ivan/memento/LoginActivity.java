@@ -104,6 +104,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onClick(View view) {
                 attemptLogin();
+                Intent i= new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(i);
             }
         });
         TextView signUpButton = (TextView) findViewById(R.id.signUp);
@@ -187,11 +189,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
             cancel = true;
+        }else if (!isPasswordValid(password)) {//password.length>8
+            mPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mUsernameView;
+            cancel=true;
         }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(username)) {
             mUsernameView.setError(getString(R.string.error_field_required));
+            focusView = mUsernameView;
+            cancel = true;
+        }else if (!isUsernameValid(username)) {//username.length>4
+            mUsernameView.setError(getString(R.string.error_invalid_username));
             focusView = mUsernameView;
             cancel = true;
         }
@@ -217,33 +227,33 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                   // Toast.makeText(getApplicationContext(), "Trasferimento avvenuto con successo", Toast.LENGTH_LONG).show();
+                    // Toast.makeText(getApplicationContext(), "Trasferimento avvenuto con successo", Toast.LENGTH_LONG).show();
                     try {
                         risposta = new String(responseBody, "UTF-8");
                         JSONObject main = new JSONObject(risposta);
 
-                         boolean success = main.getBoolean("success");
+                        boolean success = main.getBoolean("success");
 
 
-                            Toast.makeText(getApplicationContext(),risposta,Toast.LENGTH_LONG).show();
-                            if (success) {
-                                String userId = main.getString("user_id");
-                                String token = main.getString("token");
+                        Toast.makeText(getApplicationContext(), risposta, Toast.LENGTH_LONG).show();
+                        if (success) {
+                            String userId = main.getString("user_id");
+                            String token = main.getString("token");
 
-                                SharedPreferences ps = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                                SharedPreferences.Editor editor = ps.edit();
-                                editor.putString("token",token); //salvo token e username
-                                editor.putString("user_id",userId);
-                                editor.apply();
+                            SharedPreferences ps = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                            SharedPreferences.Editor editor = ps.edit();
+                            editor.putString("token", token); //salvo token e username
+                            editor.putString("user_id", userId);
+                            editor.apply();
 
-                                Intent i = new Intent(getBaseContext(), MainActivity.class);
-                                startActivity(i);
-                            }else {
-                                Toast.makeText(getApplicationContext(), "Utente o password errati", Toast.LENGTH_LONG).show();
-                            }
-                    }catch (JSONException e) {
+                            Intent i = new Intent(getBaseContext(), MainActivity.class);
+                            startActivity(i);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Utente o password errati", Toast.LENGTH_LONG).show();
+                        }
+                    } catch (JSONException e) {
                         e.printStackTrace();
-                    }catch(UnsupportedEncodingException e) {
+                    } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                         Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                     }
@@ -346,5 +356,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
+    }
+    private boolean isUsernameValid(String username) {
+        return username.length() > 4;
+    }
+
+    private boolean isPasswordValid(String password) {
+        return password.length() > 8;
     }
 }
